@@ -4,7 +4,7 @@
     "dev": "nodemon src/server.ts",
     "format": "prettier src --write",
     "lint": "eslint . --ext ts --max-warnings 0 --fix",
-    "fix": "npm run format & npm run lint",
+    "fix": "npm run format",
     "prepare": "husky install",
     "build": "tsc",
     "db-sync": "ts-node src/utils/syncDbTables.ts"
