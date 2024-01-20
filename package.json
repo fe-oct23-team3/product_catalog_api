@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node build/server.js",
     "dev": "nodemon src/server.ts",
     "format": "prettier src --write",
     "lint": "eslint . --ext ts --max-warnings 0 --fix",
