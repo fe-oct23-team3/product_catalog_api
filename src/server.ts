@@ -1,13 +1,27 @@
-import express from 'express'
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import { connectToDb } from './utils/db';
+import { productRouter } from './modules/products/product.route';
 
-const app = express()
+const server = async () => {
+  const PORT = process.env.PORT || 5000;
+  const CLIENT_URL = 'http://localhost:3000';
+  const app = express();
 
-const PORT = 3005
+  app.use(
+    cors({
+      origin: [CLIENT_URL, 'https://fe-oct23-team3.github.io'],
+    }),
+  );
 
-app.get('/', (req, res) => {
-  res.send('Hello')
-})
+  app.use('/products', express.json(), productRouter);
 
-app.listen(PORT, () => {
-  console.log(`API is ready on http://localhost:${PORT}`)
-})
+  await connectToDb();
+
+  app.listen(PORT, () =>
+    console.log(`API is ready on http://localhost:${PORT}`),
+  );
+};
+
+server();
