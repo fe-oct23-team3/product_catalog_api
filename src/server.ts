@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { connectToDb } from './utils/db';
+import { connectToDb } from './db';
 import { productRouter } from './modules/products/product.route';
 
 const server = async () => {
