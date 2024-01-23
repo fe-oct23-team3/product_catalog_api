@@ -1,8 +1,43 @@
 import { Products } from './product.model';
 import * as productDetailsService from '../productsDetails/productsDetails.service';
 
-export const getAll = async () => {
-  const products = await Products.findAll();
+export const getAll = async (
+  page: number,
+  limit: number,
+  order: string | undefined,
+  type: string | undefined,
+) => {
+  if (!page) {
+    page = 0;
+  }
+
+  if (!limit) {
+    limit = 20;
+  }
+
+  let orderColumn = 'id';
+  let orderDirection = 'ASC';
+
+  if (order) {
+    const [column, direction] = order.split(',');
+
+    if (column) {
+      orderColumn = column;
+    }
+
+    if (direction) {
+      orderDirection = direction.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    }
+  }
+
+  const whereClause = type ? { category: type } : undefined;
+
+  const products = await Products.findAndCountAll({
+    limit: limit,
+    offset: page * limit,
+    order: [[orderColumn, orderDirection]],
+    where: whereClause,
+  });
 
   return products;
 };
