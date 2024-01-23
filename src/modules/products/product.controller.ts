@@ -29,6 +29,27 @@ export const get: Controller = async (req, res) => {
   res.send(products);
 };
 
+export const getRecomended: Controller = async (req, res) => {
+  const { id: idParams } = req.params;
+  const id = Number(idParams);
+
+  if (!isNumberValid(id)) {
+    res.sendStatus(400);
+
+    return;
+  }
+
+  const recomended = await productService.getRecomendedById(id);
+
+  if (!recomended || !recomended.rows.length) {
+    res.sendStatus(404);
+
+    return;
+  }
+
+  res.send(recomended);
+};
+
 export const getOne: Controller = async (req, res) => {
   const { id: idParams } = req.params;
   const id = Number(idParams);

@@ -2,11 +2,11 @@ import { Products } from './product.model';
 import * as productDetailsService from '../productsDetails/productsDetails.service';
 
 export const getAll = async (
-  page: number,
-  limit: number,
-  order: string | undefined,
-  direction: string | undefined,
-  type: string | undefined,
+  page?: number,
+  limit?: number,
+  order?: string,
+  direction?: string,
+  type?: string,
 ) => {
   if (!page) {
     page = 0;
@@ -37,6 +37,24 @@ export const getAll = async (
   });
 
   return products;
+};
+
+export const getRecomendedById = async (id: number) => {
+  const product = await getById(id);
+
+  if (!product) {
+    return;
+  }
+
+  const recomended = await getAll(
+    0,
+    16,
+    'year',
+    'desc',
+    product.get('category') as string,
+  );
+
+  return recomended;
 };
 
 export const getById = (id: number) => Products.findByPk(id);
