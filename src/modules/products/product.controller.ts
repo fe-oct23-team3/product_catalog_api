@@ -63,6 +63,18 @@ export const getNew: Controller = async (req, res) => {
   res.send(newProducts);
 };
 
+export const getHighestDiscountProducts: Controller = async (req, res) => {
+  const products = await productService.findHighestDiscountProducts();
+
+  if (!products || !products.length) {
+    res.sendStatus(404);
+
+    return;
+  }
+
+  res.send(products);
+};
+
 export const getOne: Controller = async (req, res) => {
   const { id: idParams } = req.params;
   const id = Number(idParams);
