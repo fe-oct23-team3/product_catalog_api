@@ -50,6 +50,19 @@ export const getRecomended: Controller = async (req, res) => {
   res.send(recomended);
 };
 
+export const getNew: Controller = async (req, res) => {
+  console.log('in getNew');
+  const newProducts = await productService.getAll(0, 16, 'year', 'desc');
+
+  if (!newProducts || !newProducts.rows.length) {
+    res.sendStatus(404);
+
+    return;
+  }
+
+  res.send(newProducts);
+};
+
 export const getOne: Controller = async (req, res) => {
   const { id: idParams } = req.params;
   const id = Number(idParams);
