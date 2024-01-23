@@ -5,6 +5,7 @@ export const getAll = async (
   page: number,
   limit: number,
   order: string | undefined,
+  direction: string | undefined,
   type: string | undefined,
 ) => {
   if (!page) {
@@ -19,11 +20,7 @@ export const getAll = async (
   let orderDirection = 'ASC';
 
   if (order) {
-    const [column, direction] = order.split(',');
-
-    if (column) {
-      orderColumn = column;
-    }
+    orderColumn = order;
 
     if (direction) {
       orderDirection = direction.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
