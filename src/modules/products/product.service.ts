@@ -1,9 +1,25 @@
 import { Products } from './product.model';
+import * as productDetailsService from '../productsDetails/productsDetails.service';
 
 export const getAll = async () => {
-  const data = await Products.findAll();
+  const products = await Products.findAll();
 
-  return data;
+  return products;
+};
+
+export const getById = (id: number) => Products.findByPk(id);
+
+export const findProductDetailsById = async (id: number) => {
+  const product = await getById(id);
+
+  if (!product) {
+    return;
+  }
+
+  const productId = product.get('itemId');
+  const currentProduct = await productDetailsService.getById(productId);
+
+  return currentProduct;
 };
 
 export const bulkCreate = (

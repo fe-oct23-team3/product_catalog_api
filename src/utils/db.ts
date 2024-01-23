@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Products } from '../modules/products/product.model';
+import { ProductsDetails } from '../modules/productsDetails/productsDetails.model';
 
 export const connectToDb = async () => {
   const DB_NAME = process.env.DB_NAME;
@@ -11,7 +12,7 @@ export const connectToDb = async () => {
   const DB_URI = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
   const sequelize = new Sequelize(DB_URI, {
-    models: [Products],
+    models: [Products, ProductsDetails],
     dialect: 'postgres',
     dialectOptions: {
       ssl: true,
