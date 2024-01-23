@@ -7,15 +7,24 @@ export const get: Controller = async (req, res) => {
   const page = Number(req.query.page);
   const limit = Number(req.query.limit);
   const order = req.query.order?.toString();
+  const direction = req.query.direction?.toString();
   const type = req.query.type?.toString();
 
-  if (!isGetProductsQueriesValid(page, limit, order || '', type)) {
+  if (
+    !isGetProductsQueriesValid(page, limit, order || '', direction || '', type)
+  ) {
     res.sendStatus(400);
 
     return;
   }
 
-  const products = await productService.getAll(page, limit, order, type);
+  const products = await productService.getAll(
+    page,
+    limit,
+    order,
+    direction,
+    type,
+  );
 
   res.send(products);
 };
