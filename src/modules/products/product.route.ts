@@ -5,5 +5,6 @@ const productRouter = express.Router();
 
 productRouter.get('/', productController.get);
 productRouter.get('/:id', productController.getOne);
+productRouter.get('/:id/recomended', productController.getRecomended);
 
 export { productRouter };
