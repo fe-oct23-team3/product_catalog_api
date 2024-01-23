@@ -1,5 +1,6 @@
 import { Products } from './product.model';
 import * as productDetailsService from '../productsDetails/productsDetails.service';
+import sequelize from 'sequelize';
 
 export const getAll = async (
   page?: number,
@@ -13,7 +14,7 @@ export const getAll = async (
   }
 
   if (!limit) {
-    limit = 20;
+    limit = 16;
   }
 
   let orderColumn = 'id';
@@ -55,6 +56,20 @@ export const getRecomendedById = async (id: number) => {
   );
 
   return recomended;
+};
+
+export const findHighestDiscountProducts = async () => {
+  const products = await Products.findAll({
+    order: [
+      [
+        sequelize.literal('("Products"."fullPrice" - "Products"."price")'),
+        'DESC',
+      ],
+    ],
+    limit: 16,
+  });
+
+  return products;
 };
 
 export const getById = (id: number) => Products.findByPk(id);
