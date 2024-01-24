@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Products } from './modules/products/product.model';
-import { ProductsDetails } from './modules/productsDetails/productsDetails.model';
+import { Products } from './models/product.model';
+import { ProductsDetails } from './models/productsDetails.model';
 
 export const connectToDb = async () => {
   const DB_NAME = process.env.DB_NAME;
