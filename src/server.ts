@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { connectToDb } from './db';
-import { productRouter } from './modules/products/product.route';
+import { productRouter } from './routes/product.route';
 
 const server = async () => {
   const PORT = process.env.PORT || 5000;
