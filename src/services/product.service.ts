@@ -13,10 +13,6 @@ export const getAll = async (
     page = 0;
   }
 
-  if (!limit) {
-    limit = 16;
-  }
-
   let orderColumn = 'id';
   let orderDirection = 'ASC';
 
@@ -29,10 +25,12 @@ export const getAll = async (
   }
 
   const whereClause = type ? { category: type } : undefined;
+  const limitClause = limit ? limit : undefined;
+  const offsetClause = limit && page ? page * limit : undefined;
 
   const products = await Products.findAndCountAll({
-    limit: limit,
-    offset: page * limit,
+    limit: limitClause,
+    offset: offsetClause,
     order: [[orderColumn, orderDirection]],
     where: whereClause,
   });
